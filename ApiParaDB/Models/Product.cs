@@ -22,8 +22,6 @@ namespace ApiParaDB.Models
         public int category_Id { get; set; }
 
         public bool is_active { get; set; } = true;
-
-        public Category Category { get; set; }
     }
 
 }
