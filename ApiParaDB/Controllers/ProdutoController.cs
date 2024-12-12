@@ -23,11 +23,11 @@
         }
 
         [HttpPost]
-        public IActionResult Post(Product produto)
+        public IActionResult Post(Product product)
         {
-            _context.Products.Add(produto);
+            _context.Products.Add(product);
             _context.SaveChanges();
-            return CreatedAtAction(nameof(Get), new { id = produto.Id }, produto);
+            return CreatedAtAction(nameof(Get), new { id = product.Id }, product);
         }
     }
 

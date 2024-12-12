@@ -10,18 +10,18 @@ namespace ApiParaDB.Models
 
         [Required]
         [StringLength(100)]
-        public string Name { get; set; }
+        public string name { get; set; }
 
-        public string Description { get; set; }
+        public string description { get; set; }
 
         [Required]
         [Range(0.01, double.MaxValue)]
-        public decimal Price { get; set; }
+        public decimal price { get; set; }
 
         [ForeignKey("Category")]
-        public int CategoryId { get; set; }
+        public int category_Id { get; set; }
 
-        public bool IsActive { get; set; } = true;
+        public bool is_active { get; set; } = true;
 
         public Category Category { get; set; }
     }
