@@ -17,16 +17,18 @@ public interface IService
 	[OperationContract]
 	CompositeType GetDataUsingDataContract(CompositeType composite);
 
-	// TODO: Add your service operations here
+	//TODO: Add your service operations here
 
 	[OperationContract]
-	user[] GetUsers();
-
-	[OperationContract]
-	user[] Addusers(user user);
-
-    [OperationContract]
 	bool testconnection();
+ //  [OperationContract]
+ //  user[] GetUsers();
+
+    //[OperationContract]
+    //user[] Addusers(user user);
+
+    //[OperationContract]
+    //bool testconnection();
 }
 
 // Use a data contract as illustrated in the sample below to add composite types to service operations.

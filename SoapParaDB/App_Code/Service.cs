@@ -6,6 +6,7 @@ using System.ServiceModel;
 using System.ServiceModel.Web;
 using System.Text;
 using System.Data.SqlClient;
+using Npgsql;
 
 // NOTE: You can use the "Rename" command on the "Refactor" menu to change the class name "Service" in code, svc and config file together.
 public class Service : IService
@@ -28,20 +29,16 @@ public class Service : IService
         return composite;
     }
 
-
-    public SqlConnection GetConnection()
-    {
-        return new SqlConnection("Server=MSI\\SQLEXPRESS;Database=VendingMachineDB;Trusted_Connection=True;TrustServerCertificate=True;");
-    }
-
+    string connectionString = "Host=eerie-grebe-3686.jxf.gcp-europe-west1.cockroachlabs.cloud;Port=26257;Database=ISI;Username=joao;Password=nc7huUd_2pMx2BXoyP9fLw;SSL Mode=VerifyFull;";
+    // return new SqlConnection("Server=MSI\\SQLEXPRESS;Database=VendingMachineDB;Trusted_Connection=True;TrustServerCertificate=True;");
 
     public bool testconnection()
     {
-        SqlConnection conn = GetConnection();
+        NpgsqlConnection connection = new NpgsqlConnection(connectionString);
         try
         {
-            conn.Open();
-            conn.Close();
+            connection.Open();
+            connection.Close();
             return true;
         }
         catch (Exception e)
@@ -50,34 +47,34 @@ public class Service : IService
         }
     }
 
-    public user[] GetUsers()
-    {
-        SqlConnection conn = GetConnection();
-        conn.Open();
-        SqlCommand cmd = new SqlCommand("SELECT * FROM users", conn);
-        SqlDataReader reader = cmd.ExecuteReader();
-        List<user> users = new List<user>();
-        while (reader.Read())
-        {
-            user u = new user();
-            u.id = reader.GetInt32(0);
-            u.username = reader.GetString(1);
-            u.password = reader.GetString(2);
-            users.Add(u);
-        }
-        conn.Close();
-        return users.ToArray();
-    }
+    //public user[] GetUsers()
+    //{
+    //    ////SqlConnection conn = GetConnection();
+    //    ////conn.Open();
+    //    //SqlCommand cmd = new SqlCommand("SELECT * FROM users", conn);
+    //    //SqlDataReader reader = cmd.ExecuteReader();
+    //    //List<user> users = new List<user>();
+    //    //while (reader.Read())
+    //    //{
+    //    //    user u = new user();
+    //    //    u.id = reader.GetInt32(0);
+    //    //    u.username = reader.GetString(1);
+    //    //    u.password = reader.GetString(2);
+    //    //    users.Add(u);
+    //    //}
+    //    ////conn.Close();
+    //    //return users.ToArray();
+    //}
 
-    public user[] Addusers(user user)
-    {
-        SqlConnection conn = GetConnection();
-        conn.Open();
-        SqlCommand cmd = new SqlCommand("INSERT INTO users (username, password) VALUES (@username, @password)", conn);
-        cmd.Parameters.AddWithValue("@username", user.username);
-        cmd.Parameters.AddWithValue("@password", user.password);
-        cmd.ExecuteNonQuery();
-        conn.Close();
-        return GetUsers();
-    }
+    //public user[] Addusers(user user)
+    //{
+    //    ////SqlConnection conn = GetConnection();
+    //    ////conn.Open();
+    //    //SqlCommand cmd = new SqlCommand("INSERT INTO users (username, password) VALUES (@username, @password)", conn);
+    //    //cmd.Parameters.AddWithValue("@username", user.username);
+    //    //cmd.Parameters.AddWithValue("@password", user.password);
+    //    //cmd.ExecuteNonQuery();
+    //    ////conn.Close();
+    //    //return GetUsers();
+    //}
 }
