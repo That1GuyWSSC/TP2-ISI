@@ -11,34 +11,14 @@ using Npgsql;
 // NOTE: You can use the "Rename" command on the "Refactor" menu to change the class name "Service" in code, svc and config file together.
 public class Service : IService
 {
-    public string GetData(int value)
-    {
-        return string.Format("You entered: {0}", value);
-    }
-
-    public CompositeType GetDataUsingDataContract(CompositeType composite)
-    {
-        if (composite == null)
-        {
-            throw new ArgumentNullException("composite");
-        }
-        if (composite.BoolValue)
-        {
-            composite.StringValue += "Suffix";
-        }
-        return composite;
-    }
-
-    string connectionString = "Host=eerie-grebe-3686.jxf.gcp-europe-west1.cockroachlabs.cloud;Port=26257;Database=ISI;Username=joao;Password=nc7huUd_2pMx2BXoyP9fLw;SSL Mode=VerifyFull;";
-    // return new SqlConnection("Server=MSI\\SQLEXPRESS;Database=VendingMachineDB;Trusted_Connection=True;TrustServerCertificate=True;");
-
     public bool testconnection()
     {
-        NpgsqlConnection connection = new NpgsqlConnection(connectionString);
+        string connectionString = DatabaseConfig.ConnectionString;
         try
         {
-            connection.Open();
-            connection.Close();
+            var conn = new NpgsqlConnection(connectionString);
+            conn.Open();
+            conn.Close();
             return true;
         }
         catch (Exception e)
@@ -47,34 +27,128 @@ public class Service : IService
         }
     }
 
-    //public user[] GetUsers()
-    //{
-    //    ////SqlConnection conn = GetConnection();
-    //    ////conn.Open();
-    //    //SqlCommand cmd = new SqlCommand("SELECT * FROM users", conn);
-    //    //SqlDataReader reader = cmd.ExecuteReader();
-    //    //List<user> users = new List<user>();
-    //    //while (reader.Read())
-    //    //{
-    //    //    user u = new user();
-    //    //    u.id = reader.GetInt32(0);
-    //    //    u.username = reader.GetString(1);
-    //    //    u.password = reader.GetString(2);
-    //    //    users.Add(u);
-    //    //}
-    //    ////conn.Close();
-    //    //return users.ToArray();
-    //}
+    public List<user> getUsers()
+    {
+        string connectionString = DatabaseConfig.ConnectionString;
 
-    //public user[] Addusers(user user)
-    //{
-    //    ////SqlConnection conn = GetConnection();
-    //    ////conn.Open();
-    //    //SqlCommand cmd = new SqlCommand("INSERT INTO users (username, password) VALUES (@username, @password)", conn);
-    //    //cmd.Parameters.AddWithValue("@username", user.username);
-    //    //cmd.Parameters.AddWithValue("@password", user.password);
-    //    //cmd.ExecuteNonQuery();
-    //    ////conn.Close();
-    //    //return GetUsers();
-    //}
+        try
+        {
+            var conn = new NpgsqlConnection(connectionString);
+            conn.Open();
+            var cmd = new NpgsqlCommand("SELECT * FROM users", conn);
+            var reader = cmd.ExecuteReader();
+            var users = new List<user>();
+            while (reader.Read())
+            {
+                var usr = new user
+                {
+                    id = reader.GetInt64(0),
+                    username = reader.GetString(1),
+                    password = reader.GetString(2),
+                    role = (Role)Enum.Parse(typeof(Role), char.ToUpper(reader.GetString(3)[0]) + reader.GetString(3).Substring(1).ToLower())
+                };
+                users.Add(usr);
+            }
+            conn.Close();
+            return users;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return null;
+        }
+    }
+
+    public bool InsertUser(user newUser)
+    {
+        string connectionString = DatabaseConfig.ConnectionString;
+        try
+        {
+            using (var conn = new NpgsqlConnection(connectionString))
+            {
+                conn.Open();
+                var cmd = new NpgsqlCommand("INSERT INTO users (username, password, role) VALUES (@username, @password, @role)", conn);
+                cmd.Parameters.AddWithValue("username", newUser.username);
+                cmd.Parameters.AddWithValue("password", newUser.password);
+                cmd.Parameters.AddWithValue("role", newUser.role.ToString().ToLower());
+                cmd.ExecuteNonQuery();
+                conn.Close();
+            }
+            return true;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return false;
+        }
+    }
+
+    public bool UpdateUser(user newUser)
+    {
+        string connectionString = DatabaseConfig.ConnectionString;
+        try
+        {
+            using (var conn = new NpgsqlConnection(connectionString))
+            {
+                conn.Open();
+                var cmd = new NpgsqlCommand("UPDATE users SET username = @username, password = @password, role = @role WHERE id = @id", conn);
+                cmd.Parameters.AddWithValue("id", newUser.id);
+                cmd.Parameters.AddWithValue("username", newUser.username);
+                cmd.Parameters.AddWithValue("password", newUser.password);
+                cmd.Parameters.AddWithValue("role", newUser.role.ToString().ToLower());
+                cmd.ExecuteNonQuery();
+                conn.Close();
+            }
+            return true;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return false;
+        }
+    }
+
+    public bool DeleteUser(Int64 id)
+    {
+        string connectionString = DatabaseConfig.ConnectionString;
+        try
+        {
+            using (var conn = new NpgsqlConnection(connectionString))
+            {
+                conn.Open();
+                var cmd = new NpgsqlCommand("DELETE FROM users WHERE id = @id", conn);
+                cmd.Parameters.AddWithValue("id", id);
+                cmd.ExecuteNonQuery();
+                conn.Close();
+            }
+            return true;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return false;
+        }
+    }
 }
+
+
+public static class DatabaseConfig
+{
+    public static string ConnectionString
+    {
+        get
+        {
+            var connStringBuilder = new NpgsqlConnectionStringBuilder
+            {
+                SslMode = SslMode.Require,
+                Host = "eerie-grebe-3686.jxf.gcp-europe-west1.cockroachlabs.cloud",
+                Port = 26257,
+                Username = "joao",
+                Password = "0PBz1qwWNnfda3XWIkpJoQ",
+                Database = "ISI"
+            };
+            return connStringBuilder.ConnectionString;
+        }
+    }
+}
+

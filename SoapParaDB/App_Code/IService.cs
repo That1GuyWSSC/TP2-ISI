@@ -10,59 +10,39 @@ using System.Text;
 [ServiceContract]
 public interface IService
 {
-
-	[OperationContract]
-	string GetData(int value);
-
-	[OperationContract]
-	CompositeType GetDataUsingDataContract(CompositeType composite);
-
-	//TODO: Add your service operations here
-
 	[OperationContract]
 	bool testconnection();
- //  [OperationContract]
- //  user[] GetUsers();
 
-    //[OperationContract]
-    //user[] Addusers(user user);
+	[OperationContract]
+	List<user> getUsers();
 
-    //[OperationContract]
-    //bool testconnection();
+	[OperationContract]
+	bool InsertUser(user newUser);
+
+    [OperationContract]
+    bool UpdateUser(user newUser);
+
+    [OperationContract]
+    bool DeleteUser(Int64 id);
 }
 
-// Use a data contract as illustrated in the sample below to add composite types to service operations.
-[DataContract]
-public class CompositeType
+
+
+public enum Role
 {
-	bool boolValue = true;
-	string stringValue = "Hello ";
-
-	[DataMember]
-	public bool BoolValue
-	{
-		get { return boolValue; }
-		set { boolValue = value; }
-	}
-
-	[DataMember]
-	public string StringValue
-	{
-		get { return stringValue; }
-		set { stringValue = value; }
-	}
+    Admin,
+    Operator
 }
 
 [DataContract]
 public class user
 {
     [DataMember]
-    public int id { get; set; }
+    public Int64 id { get; set; }
     [DataMember]
     public string username { get; set; }
     [DataMember]
     public string password { get; set; }
     [DataMember]
-    public string role { get; set; }
-  
+    public Role role { get; set; }
 }
