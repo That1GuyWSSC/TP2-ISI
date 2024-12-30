@@ -1,4 +1,4 @@
-﻿namespace Cliente
+﻿namespace VendingMachine
 {
     public partial class AppShell : Shell
     {

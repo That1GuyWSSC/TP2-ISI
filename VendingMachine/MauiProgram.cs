@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 
-namespace Cliente
+namespace VendingMachine
 {
     public static class MauiProgram
     {

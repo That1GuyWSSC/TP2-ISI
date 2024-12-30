@@ -1,7 +1,7 @@
 ﻿using Android.App;
 using Android.Runtime;
 
-namespace Cliente
+namespace VendingMachine
 {
     [Application]
     public class MainApplication : MauiApplication

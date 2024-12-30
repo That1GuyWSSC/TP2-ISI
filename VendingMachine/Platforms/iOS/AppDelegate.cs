@@ -1,6 +1,6 @@
 ﻿using Foundation;
 
-namespace Cliente
+namespace VendingMachine
 {
     [Register("AppDelegate")]
     public class AppDelegate : MauiUIApplicationDelegate
