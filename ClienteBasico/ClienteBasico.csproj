@@ -48,15 +48,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CategoryApiClient.cs" />
+    <Compile Include="ApiClients\CategoryApiClient.cs" />
+    <Compile Include="ApiClients\CurrencyApiClient.cs" />
+    <Compile Include="ApiClients\ProductApiClient.cs" />
     <Compile Include="Connected Services\UserService\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
-    <Compile Include="CurrencyApiClient.cs" />
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\Currency.cs" />
+    <Compile Include="Models\Product.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

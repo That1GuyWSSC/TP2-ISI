@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-using testebasic.Models;
+using ClienteBasico.Models;
 
 public class CategoryApiClient
 {

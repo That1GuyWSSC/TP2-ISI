@@ -1,6 +1,6 @@
 ﻿
 
-namespace testebasic.Models
+namespace ClienteBasico.Models
 {
     public class Category
     {
