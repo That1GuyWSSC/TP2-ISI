@@ -1,6 +1,3 @@
-
-using testebasic;
-
 namespace testebasic2swagger
 {
     public class Program

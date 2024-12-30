@@ -1,8 +1,8 @@
-﻿namespace testebasic.Controllers
+﻿namespace testebasic2swagger.Controllers
 {
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
-    using testebasic.Models;
+    using testebasic2swagger.Models;
 
         [ApiController]
         [Route("api/[controller]")]

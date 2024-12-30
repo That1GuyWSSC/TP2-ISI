@@ -1,4 +1,4 @@
-﻿namespace testebasic.Models
+﻿namespace testebasic2swagger.Models
 {
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
