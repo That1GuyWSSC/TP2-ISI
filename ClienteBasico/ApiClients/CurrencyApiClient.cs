@@ -14,7 +14,7 @@ namespace ClienteBasico
     public class CurrencyApiClient
     {
         private readonly HttpClient _httpClient;
-        private readonly string _baseUrl = "https://api.freecurrencyapi.com/v1/latest?apikey=fca_live_a9uasdP6yjM3v5UY4hLLHtXmW2CsvhCO4OSTfOpz"; // Replace with your API's base URL
+        private readonly string _baseUrl = "https://api.freecurrencyapi.com/v1/latest?apikey=fca_live_a9uasdP6yjM3v5UY4hLLHtXmW2CsvhCO4OSTfOpz&base_currency=EUR"; // Replace with your API's base URL
 
         public CurrencyApiClient(HttpClient httpClient)
         {
@@ -29,7 +29,6 @@ namespace ClienteBasico
             var apiResponse = JsonConvert.DeserializeObject<CurrencyData>(json);
             return new List<CurrencyData> { apiResponse };
         }
-
 
     }
 }

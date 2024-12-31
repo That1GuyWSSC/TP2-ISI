@@ -148,18 +148,21 @@ class Program
 
     private static async Task GetAllCurrencies(CurrencyApiClient apiClient)
     {
+        Console.WriteLine("\nInsira um valor em Euros (€): ");
+        decimal current = Convert.ToDecimal(Console.ReadLine());
         Console.WriteLine("\n=== View All Currencies ===");
         var currencies = await apiClient.GetCurrenciesAsync();
         foreach (var currency in currencies)
         {
-            Console.WriteLine($"AUD: {currency.Data.AUD}, BGN: {currency.Data.BGN}, BRL: {currency.Data.BRL}, CAD: {currency.Data.CAD}, " +
-                $"CHF: {currency.Data.CHF}, CNY: {currency.Data.CNY}, CZK: {currency.Data.CZK}, DKK: {currency.Data.DKK}, EUR: {currency.Data.EUR}, " +
-                $"GBP: {currency.Data.GBP}, HKD: {currency.Data.HKD}, HRK: {currency.Data.HRK}, HUF: {currency.Data.HUF}, IDR: {currency.Data.IDR}, " +
-                $"ILS: {currency.Data.ILS}, INR: {currency.Data.INR}, ISK: {currency.Data.ISK}, JPY: {currency.Data.JPY}, KRW: {currency.Data.KRW}, " +
-                $"MXN: {currency.Data.MXN}, MYR: {currency.Data.MYR}, NOK: {currency.Data.NOK}, NZD: {currency.Data.NZD}, PHP: {currency.Data.PHP}, " +
-                $"PLN: {currency.Data.PLN}, RON: {currency.Data.RON}, RUB: {currency.Data.RUB}, SEK: {currency.Data.SEK}, SGD: {currency.Data.SGD}, " +
-                $"THB: {currency.Data.THB}, TRY: {currency.Data.TRY}, USD: {currency.Data.USD}, ZAR: {currency.Data.ZAR}");
+            Console.WriteLine($" EUR: { currency.Data.EUR * current}\n AUD: {currency.Data.AUD * current}\n BGN: {currency.Data.BGN * current}\n BRL: {currency.Data.BRL * current}\n CAD: {currency.Data.CAD * current}\n " +
+                $"CHF: {currency.Data.CHF * current}\n CNY: {currency.Data.CNY * current}\n CZK: {currency.Data.CZK * current}\n DKK: {currency.Data.DKK * current}\n " +
+                $"GBP: {currency.Data.GBP * current}\n HKD: {currency.Data.HKD * current}\n HRK: {currency.Data.HRK * current}\n HUF: {currency.Data.HUF * current}\n IDR: {currency.Data.IDR * current}\n " +
+                $"ILS: {currency.Data.ILS * current}\n INR: {currency.Data.INR * current}\n ISK: {currency.Data.ISK * current}\n JPY: {currency.Data.JPY * current}\n KRW: {currency.Data.KRW * current}\n " +
+                $"MXN: {currency.Data.MXN * current}\n MYR: {currency.Data.MYR * current}\n NOK: {currency.Data.NOK * current}\n NZD: {currency.Data.NZD * current}\n PHP: {currency.Data.PHP * current}\n " +
+                $"PLN: {currency.Data.PLN * current}\n RON: {currency.Data.RON * current}\n RUB: {currency.Data.RUB * current}\n SEK: {currency.Data.SEK * current}\n SGD: {currency.Data.SGD * current}\n " +
+                $"THB: {currency.Data.THB * current}\n TRY: {currency.Data.TRY * current}\n USD: {currency.Data.USD * current}\n ZAR: {currency.Data.ZAR * current}");
         }
+        
     }
 
     private static void UserManagement(ClienteBasico.UserService.ServiceClient ws)
